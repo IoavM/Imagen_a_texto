@@ -20,9 +20,7 @@ st.title("TRADUCTOR.")
 st.subheader("Escucho lo que quieres traducir.")
 
 
-image = Image.open('OIG7.jpg')
 
-st.image(image,width=300)
 with st.sidebar:
     st.subheader("Traductor.")
     st.write("Presiona el botón, cuando escuches la señal "
@@ -52,15 +50,6 @@ stt_button.js_on_event("button_click", CustomJS(code="""
     }
     recognition.start();
     """))
-
-result = streamlit_bokeh_events(
-    stt_button,
-    events="GET_TEXT",
-    key="listen",
-    refresh_on_update=False,
-    override_height=75,
-    debounce_time=0)
-
 if result:
     if "GET_TEXT" in result:
         st.write(result.get("GET_TEXT"))
@@ -76,6 +65,15 @@ if result:
         "Selecciona el lenguaje de Entrada",
         ("Inglés", "Español", "Bengali", "Coreano", "Mandarín", "Japonés"),
     )
+result = streamlit_bokeh_events(
+    stt_button,
+    events="GET_TEXT",
+    key="listen",
+    refresh_on_update=False,
+    override_height=75,
+    debounce_time=0)
+
+
     if in_lang == "Inglés":
         input_language = "en"
     elif in_lang == "Español":
